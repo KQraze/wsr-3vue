@@ -25,6 +25,8 @@ const model = reactive({
   password: "",
 });
 
+const serverError = computed(() => store.state.account.error);
+
 const { validations, hasValidationError } = useValidation(
   model,
   validationSchema
@@ -88,6 +90,7 @@ const submit = () =>
         <button class="button button-success" :disabled="!hasValidationError">
           Зарегистрироваться
         </button>
+        <p class="reg-card__error" v-if="serverError">{{ serverError }}</p>
       </form>
     </section>
   </main>
@@ -112,6 +115,12 @@ const submit = () =>
   flex-direction: column;
   background: white;
   gap: 10px;
+
+  &__error {
+    text-align: center;
+    color: #810d0d;
+    font-weight: 500;
+  }
 
   & form {
     width: 100%;
